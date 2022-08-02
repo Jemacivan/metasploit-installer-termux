@@ -1,21 +1,14 @@
-addrepo(){
-	# Add repo in separate file
-	mkdir -p $PREFIX/etc/apt/sources.list.d && printf "deb https://hax4us.github.io/TermuxBlack/ termuxblack main" > $PREFIX/etc/apt/sources.list.d/termuxblack.list
-
-	# Add gpg public key
-	wget -q https://hax4us.github.io/TermuxBlack/termuxblack.key -O termuxblack.key && apt-key add termuxblack.key
-	
-	# just update
-	apt-get update -yq --silent
-	}
-
-addrepo
+ruby2_install(){
+	pkg install wget -y
+	wget -O ruby2_2.7.2-3.deb https://github.com/Hax4us/TermuxBlack/raw/master/dists/termuxblack/main/binary-aarch64/ruby2_2.7.2-3_aarch64.deb
+	apt -y install ./ruby2_2.7.2-3.deb
+}
 
 
-clear
-
+pkg update
+ruby2_install
 pkg upgrade -y -o Dpkg::Options::="--force-confnew"
-pkg install -y autoconf bison clang coreutils curl findutils apr apr-util postgresql openssl readline libffi libgmp libpcap libsqlite libgrpc libtool libxml2 libxslt ncurses make ruby2 ncurses-utils ncurses git wget unzip zip tar termux-tools termux-elf-cleaner pkg-config git -o Dpkg::Options::="--force-confnew"
+pkg install -y autoconf bison clang coreutils curl findutils apr apr-util postgresql openssl readline libffi libgmp libpcap libsqlite libgrpc libtool libxml2 libxslt ncurses make ncurses-utils ncurses git wget unzip zip tar termux-tools termux-elf-cleaner pkg-config git -o Dpkg::Options::="--force-confnew"
 
 source <(curl -sL https://github.com/termux/termux-packages/files/2912002/fix-ruby-bigdecimal.sh.txt)
 rm -rf $HOME/metasploit-framework
